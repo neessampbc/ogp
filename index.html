@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Order Growth Partners</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo-smiley.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700&family=Manrope:wght@700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
@@ -211,26 +212,35 @@
               <div class="google-card__badge">
                 <img src="assets/google-logo.svg" alt="Google" />
               </div>
+
               <div class="google-card__phone">
-                <div class="phone-bezel phone-bezel--sm" >
+                <!-- the search bar overlays the phone itself (a sibling positioned
+                     over the bezel, not nested inside the screen's clipped area) -->
+                <div class="google-card__floating-search">
+                  <img src="assets/search-icon-2.svg" alt="" />
+                  <span>Food Open Near Me</span>
+                </div>
+                <div class="phone-bezel phone-bezel--sm">
                   <div class="phone-screen phone-screen--sm">
                     <img src="assets/nyc-map-dark.png" alt="" class="phone-screen__map-img" />
                     <div class="status-row status-row--sm">
                       <span class="status-row__time" style="font-size:8px;">9:41</span>
                       <div class="dynamic-island" style="width:40px;height:12px;"></div>
                     </div>
-                    <div class="map-pin map-pin--red" style="left:65%;top:57%;"><img src="assets/pin-red.svg" alt=""><span>Katz's Deli</span></div>
-                    <div class="map-pin map-pin--green" style="left:17%;top:35%;"><img src="assets/pin-green.svg" alt=""><span>Sal's Corner Deli</span></div>
-                    <div class="map-pin map-pin--orange" style="left:56%;top:24%;"><img src="assets/pin-orange.svg" alt=""><span>Murray's Deli</span></div>
-                    <div class="map-pin map-pin--blue" style="left:43%;top:68%;"><img src="assets/pin-blue.svg" alt=""><span>Leo's Bagels &amp; Deli</span></div>
-                    <div class="map-pin map-pin--purple" style="left:28%;top:48%;"><img src="assets/pin-purple.svg" alt=""><span>Union Sq Deli</span></div>
+                    <div class="map-pin map-pin--green" data-pin-order="1" style="left:17%;top:35%;"><img src="assets/pin-green.svg" alt=""><span>Sal's Corner Deli</span></div>
+                    <div class="map-pin map-pin--orange" data-pin-order="2" style="left:56%;top:24%;"><img src="assets/pin-orange.svg" alt=""><span>Murray's Deli</span></div>
+                    <div class="map-pin map-pin--purple" data-pin-order="3" style="left:28%;top:48%;"><img src="assets/pin-purple.svg" alt=""><span>Union Sq Deli</span></div>
+                    <div class="map-pin map-pin--blue" data-pin-order="4" style="left:43%;top:68%;"><img src="assets/pin-blue.svg" alt=""><span>Leo's Bagels &amp; Deli</span></div>
+                    <div class="map-pin map-pin--you" data-pin-order="5" style="left:65%;top:57%;">
+                      <span class="map-pin__ping" aria-hidden="true"></span>
+                      <img src="assets/pin-red.svg" alt="">
+                      <span>Katz's Deli</span>
+                      <span class="map-pin__badge">#1</span>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="google-card__floating-search">
-                <img src="assets/search-icon-2.svg" alt="" />
-                <span>Food Open Near Me</span>
-              </div>
+
               <p class="google-card__caption">Score #1 on local search rankings<br>in your neighborhood</p>
             </div>
           </div>
