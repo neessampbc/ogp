@@ -282,6 +282,55 @@
     requestAnimationFrame(frame);
   }
 
+  /* ============ Google-results pins: staggered pop-in + "you" ping (More Google Traffic tab) ============ */
+  var googlePins = Array.prototype.slice.call(document.querySelectorAll('.map-pin[data-pin-order]'))
+    .sort(function (a, b) { return (+a.dataset.pinOrder) - (+b.dataset.pinOrder); });
+  var googleSearchPill = document.querySelector('.google-card__floating-search');
+  var youPin = document.querySelector('.map-pin--you');
+
+  function animateGoogleCardPins() {
+    googlePins.forEach(function (pin) { pin.classList.remove('is-shown'); });
+    if (youPin) youPin.classList.remove('is-pinging');
+    if (googleSearchPill) googleSearchPill.classList.remove('is-shown');
+
+    if (reducedMotion) {
+      googlePins.forEach(function (pin) { pin.classList.add('is-shown'); });
+      if (youPin) youPin.classList.add('is-pinging');
+      if (googleSearchPill) googleSearchPill.classList.add('is-shown');
+      return;
+    }
+
+    setTimeout(function () {
+      if (googleSearchPill) googleSearchPill.classList.add('is-shown');
+    }, 150);
+
+    googlePins.forEach(function (pin, i) {
+      setTimeout(function () {
+        pin.classList.add('is-shown');
+        if (pin === youPin) {
+          setTimeout(function () { youPin.classList.add('is-pinging'); }, 400);
+        }
+      }, 220 * (i + 1));
+    });
+  }
+
+  var googleTabAnimated = false;
+  var googleTabPanel = document.querySelector('.tab-panel[data-panel="0"]');
+  if (googleTabPanel && 'IntersectionObserver' in window) {
+    var googleTabIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !googleTabAnimated) {
+          googleTabAnimated = true;
+          animateGoogleCardPins();
+          googleTabIO.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    googleTabIO.observe(googleTabPanel);
+  } else if (googleTabPanel) {
+    animateGoogleCardPins();
+  }
+
   /* ============ auto-advancing feature tabs ============ */
   var tabs = document.querySelectorAll('.tab');
   var panels = document.querySelectorAll('.tab-panel');
@@ -300,6 +349,7 @@
     tabs[index].setAttribute('aria-selected', 'true');
     panels[index].classList.add('is-active');
 
+    if (index === 0) animateGoogleCardPins();
     if (index === 2) animateReviewsCount();
 
     setTimeout(function () {
