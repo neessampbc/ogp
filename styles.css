@@ -394,7 +394,14 @@ a { text-decoration: none; color: inherit; }
 }
 .partners__track--rev { animation-name: partnersScrollRight; animation-duration: 30s; }
 @keyframes partnersScrollLeft { 100% { transform: translateX(-100%); } }
-@keyframes partnersScrollRight { 100% { transform: translateX(100%); } }
+/* Not just translateX(0 -> 100%): with the duplicate track sitting to the
+   right in the DOM (same markup as the left-scrolling row), animating
+   forward to +100% drags BOTH copies rightward and out of frame together,
+   leaving a growing gap on the left that snaps shut when the loop resets.
+   Starting pre-shifted at -100% and animating back to 0% instead means the
+   two tracks always overlap-cover the full row width at every point in the
+   cycle, same as the left row just mirrored. */
+@keyframes partnersScrollRight { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
 
 .partner-chip {
   flex-shrink: 0;
@@ -743,6 +750,16 @@ a { text-decoration: none; color: inherit; }
 }
 .google-card__search.is-shown { opacity: 1; transform: translateY(0); }
 .google-card__search img { width: clamp(13px, 1.4vw, 17px); flex-shrink: 0; }
+.google-card__search-cursor {
+  display: inline-block;
+  width: 1px;
+  height: 0.9em;
+  margin-left: 2px;
+  background: currentColor;
+  vertical-align: -0.1em;
+  animation: searchCursorBlink 1s step-end infinite;
+}
+@keyframes searchCursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
 .google-card__caption {
   flex-shrink: 0;

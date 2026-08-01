@@ -288,30 +288,59 @@
   var googleSearchPill = document.querySelector('.google-card__search');
   var youPin = document.querySelector('.map-pin--you');
 
+  /* types the query into the search pill one character at a time, like
+     someone is actively searching right before the results appear */
+  var SEARCH_QUERY = 'Food Open Near Me';
+  var searchTypedEl = document.getElementById('googleSearchTyped');
+  var typingTimer = null;
+
+  function typeSearchQuery(onDone) {
+    if (!searchTypedEl) { if (onDone) onDone(); return; }
+    searchTypedEl.textContent = '';
+    var i = 0;
+    function step() {
+      i++;
+      searchTypedEl.textContent = SEARCH_QUERY.slice(0, i);
+      if (i < SEARCH_QUERY.length) {
+        typingTimer = setTimeout(step, 45 + Math.random() * 40); // slight variance reads more like real typing than a metronome
+      } else if (onDone) {
+        typingTimer = setTimeout(onDone, 350); // beat to "read" the finished query before results appear
+      }
+    }
+    step();
+  }
+
   function animateGoogleCardPins() {
+    clearTimeout(typingTimer);
     googlePins.forEach(function (pin) { pin.classList.remove('is-shown'); });
     if (youPin) youPin.classList.remove('is-pinging');
     if (googleSearchPill) googleSearchPill.classList.remove('is-shown');
+    if (searchTypedEl) searchTypedEl.textContent = '';
+
+    function showPinsStaggered() {
+      googlePins.forEach(function (pin, i) {
+        setTimeout(function () {
+          pin.classList.add('is-shown');
+          if (pin === youPin) {
+            setTimeout(function () { youPin.classList.add('is-pinging'); }, 400);
+          }
+        }, 220 * i);
+      });
+    }
 
     if (reducedMotion) {
       googlePins.forEach(function (pin) { pin.classList.add('is-shown'); });
       if (youPin) youPin.classList.add('is-pinging');
       if (googleSearchPill) googleSearchPill.classList.add('is-shown');
+      if (searchTypedEl) searchTypedEl.textContent = SEARCH_QUERY;
       return;
     }
 
     setTimeout(function () {
       if (googleSearchPill) googleSearchPill.classList.add('is-shown');
+      // let the pill's own fade-in settle before the typing starts
+      typingTimer = setTimeout(function () { typeSearchQuery(showPinsStaggered); }, 350);
     }, 150);
-
-    googlePins.forEach(function (pin, i) {
-      setTimeout(function () {
-        pin.classList.add('is-shown');
-        if (pin === youPin) {
-          setTimeout(function () { youPin.classList.add('is-pinging'); }, 400);
-        }
-      }, 220 * (i + 1));
-    });
   }
 
   var googleTabAnimated = false;
