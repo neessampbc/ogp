@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Growth Partners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700&family=Manrope:wght@700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ HEADER / NAV ============ -->
+<header class="site-header" id="site-header" data-figma-node="1:4">
+  <nav class="nav" data-figma-node="1:5">
+    <a href="#" class="nav-logo" data-figma-node="1:6">
+      <img src="assets/logo-smiley.svg" alt="" class="nav-logo__icon" width="20" height="20" />
+      <span class="nav-logo__text">Order Growth Partners</span>
+    </a>
+    <div class="nav-cta" data-figma-node="1:40">
+      <button class="btn btn--orange nav-cta__btn" data-figma-node="7:1130">Get a FREE Demo</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" data-figma-node="21:218">
+    <div class="hero-heading" data-figma-node="1:45">
+      <h1 class="reveal-words" data-figma-node="1:70">The Growth Partner <span class="rotator" id="rotator"><span class="word">Delis</span></span><br>Trust</h1>
+    </div>
+
+    <div class="hero-panel-wrap" data-figma-node="1:76">
+      <div class="hero-panel fade-in-up" data-figma-node="1:77">
+        <div class="hero-panel__clip">
+          <div class="hero-panel__bg" data-figma-node="1:79">
+            <img src="assets/hero-bg.png" alt="" class="hero-panel__bg-img" />
+            <div class="hero-panel__tint"></div>
+          </div>
+
+          <div class="hero-panel__subtitle" data-figma-node="1:746">
+            <p data-figma-node="1:747">Missing listings, no online or delivery presence, and a lack of reviews are costing you <strong>sales every single day</strong>.</p>
+          </div>
+        </div>
+
+        <!-- phone mockup with health score gauge: sibling overlay in Figma (node 7:749),
+             not nested inside the clipped background container, so it isn't cropped by it -->
+        <div class="hero-phone-slot fade-in-up fade-in-up--delay1" data-figma-node="7:749">
+          <div class="phone-tilt" data-figma-node="5:7">
+            <div class="phone-bezel" data-figma-node="5:8">
+              <div class="phone-screen" data-figma-node="5:9">
+                <div class="scan-line" aria-hidden="true"></div>
+
+                <div class="status-row" data-figma-node="5:10">
+                  <span class="status-row__time" data-figma-node="5:11">9:41</span>
+                  <div class="dynamic-island" data-figma-node="5:12"></div>
+                  <div class="status-row__icons" data-figma-node="5:13">
+                    <img src="assets/ios-signal.svg" alt="" data-figma-node="5:63" />
+                    <img src="assets/ios-wifi.svg" alt="" data-figma-node="5:69" />
+                    <img src="assets/ios-battery.svg" alt="" data-figma-node="5:75" />
+                  </div>
+                </div>
+
+                <div class="gauge-section" data-figma-node="5:17">
+                  <div class="gauge-container" data-figma-node="5:18">
+                    <svg class="gauge-svg" viewBox="0 0 140 140" width="160" height="140">
+                      <path id="mainGaugeTrack" fill="#E8E2DD"></path>
+                      <path id="mainGaugeProgress" fill="#D96B27"></path>
+                    </svg>
+                    <div class="score-text" data-figma-node="5:21">
+                      <p class="score-text__num" id="scoreNum" data-figma-node="5:22">0</p>
+                      <p class="score-text__total" data-figma-node="5:23">/ 100</p>
+                    </div>
+                  </div>
+                  <div class="health-labels" data-figma-node="5:24">
+                    <p class="health-labels__title" data-figma-node="5:25">Website health</p>
+                    <p class="health-labels__status" data-figma-node="5:26">Poor</p>
+                  </div>
+                </div>
+
+                <div class="categories-list" data-figma-node="5:27">
+                  <div class="status-row-item" data-figma-node="5:28" data-percent="30">
+                    <div class="status-left" data-figma-node="5:29">
+                      <svg class="mini-gauge" viewBox="0 0 28 28" width="28" height="28">
+                        <circle class="mini-gauge__track" cx="14" cy="14" r="10.2" fill="none" stroke="#E8E2DD" stroke-width="3.6"></circle>
+                        <circle class="mini-gauge__progress" cx="14" cy="14" r="10.2" fill="none" stroke-linecap="round" stroke="#D96B27" stroke-width="3.6" stroke-dasharray="64.088" stroke-dashoffset="64.088" transform="rotate(-90 14 14)"></circle>
+                      </svg>
+                      <div class="status-labels" data-figma-node="5:33">
+                        <p class="status-labels__name" data-figma-node="5:34">Search results</p>
+                        <p class="status-labels__status status-labels__status--poor" data-figma-node="5:35">Poor</p>
+                      </div>
+                    </div>
+                    <p class="row-score" data-figma-node="5:36">12/40</p>
+                  </div>
+                  <div class="status-row-item" data-figma-node="5:37" data-percent="87.5">
+                    <div class="status-left" data-figma-node="5:38">
+                      <svg class="mini-gauge" viewBox="0 0 28 28" width="28" height="28">
+                        <circle class="mini-gauge__track" cx="14" cy="14" r="10.2" fill="none" stroke="#E8E2DD" stroke-width="3.6"></circle>
+                        <circle class="mini-gauge__progress" cx="14" cy="14" r="10.2" fill="none" stroke-linecap="round" stroke="#E59E30" stroke-width="3.6" stroke-dasharray="64.088" stroke-dashoffset="64.088" transform="rotate(-90 14 14)"></circle>
+                      </svg>
+                      <div class="status-labels" data-figma-node="5:42">
+                        <p class="status-labels__name" data-figma-node="5:43">Guest experience</p>
+                        <p class="status-labels__status status-labels__status--fair" data-figma-node="5:44">Fair</p>
+                      </div>
+                    </div>
+                    <p class="row-score" data-figma-node="5:45">35/40</p>
+                  </div>
+                  <div class="status-row-item" data-figma-node="5:46" data-percent="20">
+                    <div class="status-left" data-figma-node="5:47">
+                      <svg class="mini-gauge" viewBox="0 0 28 28" width="28" height="28">
+                        <circle class="mini-gauge__track" cx="14" cy="14" r="10.2" fill="none" stroke="#E8E2DD" stroke-width="3.6"></circle>
+                        <circle class="mini-gauge__progress" cx="14" cy="14" r="10.2" fill="none" stroke-linecap="round" stroke="#D96B27" stroke-width="3.6" stroke-dasharray="64.088" stroke-dashoffset="64.088" transform="rotate(-90 14 14)"></circle>
+                      </svg>
+                      <div class="status-labels" data-figma-node="5:51">
+                        <p class="status-labels__name" data-figma-node="5:52">Local listings</p>
+                        <p class="status-labels__status status-labels__status--poor" data-figma-node="5:53">Poor</p>
+                      </div>
+                    </div>
+                    <p class="row-score" data-figma-node="5:54">4/20</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA bar -->
+        <div class="cta-bar-slot fade-in-up fade-in-up--delay2" data-figma-node="5:55">
+          <div class="cta-bar">
+            <div class="cta-bar__input" data-figma-node="5:56">
+              <img src="assets/search-icon.svg" alt="" data-figma-node="5:66" />
+              <span data-figma-node="5:58">Find your store name</span>
+            </div>
+            <button class="btn btn--orange cta-bar__btn" data-figma-node="5:59">Get my FREE Audit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRAFFIC / SALES / ORDERS SECTION ============ -->
+  <section class="growth-section" data-figma-node="1:83">
+    <div class="growth-hero" data-figma-node="7:1097">
+      <div class="growth-hero__heading fade-on-scroll" data-figma-node="7:1098">
+        <h2 class="reveal-words" data-figma-node="7:1099">We get you more traffic,  sales,  and repeat customers</h2>
+        <p class="growth-hero__subtitle" data-figma-node="15:2044">We show businesses their gaps, then fix them.</p>
+      </div>
+
+      <div class="growth-cta-container" data-figma-node="7:1101">
+        <div class="growth-phone fade-on-scroll" data-figma-node="7:1102">
+          <div class="phone-bezel phone-bezel--map" data-figma-node="7:1103">
+            <div class="phone-screen phone-screen--map" data-figma-node="7:1104">
+              <img src="assets/nyc-map-static.png" alt="NYC map" class="phone-screen__map-img" />
+              <div class="status-row status-row--overlay">
+                <span class="status-row__time status-row__time--dark">9:41</span>
+                <div class="dynamic-island"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trust-badge fade-on-scroll" data-figma-node="7:1115">
+          <div class="trust-badge__icon" data-figma-node="7:1117">🗽</div>
+          <p class="trust-badge__text" data-figma-node="7:1119">The <span class="trust-badge__accent">#1 Trusted</span> Partner<br>For Delis across NYC</p>
+        </div>
+
+        <div class="growth-cta-bar-slot fade-on-scroll" data-figma-node="7:1121">
+          <div class="cta-bar">
+            <div class="cta-bar__input" data-figma-node="7:1123">
+              <img src="assets/search-icon.svg" alt="" data-figma-node="7:1124" />
+              <span data-figma-node="7:1126">Find your store name</span>
+            </div>
+            <button class="btn btn--orange cta-bar__btn" data-figma-node="7:1127">Get a Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="growth-tabs fade-on-scroll" data-figma-node="7:1467">
+      <div class="tab-row" data-figma-node="11:105" role="tablist">
+        <button class="tab is-active" data-tab="0" data-figma-node="11:106" role="tab" aria-selected="true">
+          <span>More Google Traffic</span>
+          <span class="tab__underline"></span>
+        </button>
+        <button class="tab" data-tab="1" data-figma-node="11:109" role="tab" aria-selected="false">
+          <span>More Online Sales</span>
+          <span class="tab__underline"></span>
+        </button>
+        <button class="tab" data-tab="2" data-figma-node="11:112" role="tab" aria-selected="false">
+          <span>More Repeat Orders</span>
+          <span class="tab__underline"></span>
+        </button>
+      </div>
+
+      <div class="tab-card" id="tabCard" data-figma-node="11:115">
+        <!-- panel 0: More Google Traffic -->
+        <div class="tab-panel is-active" data-panel="0">
+          <div class="tab-panel__left">
+            <p class="tab-panel__eyebrow">GOOGLE RANKINGS</p>
+            <h3 class="tab-panel__title">Show up first when<br>locals search nearby.</h3>
+          </div>
+          <div class="tab-panel__right tab-panel__right--google">
+            <div class="google-card">
+              <div class="google-card__badge">
+                <img src="assets/google-logo.svg" alt="Google" />
+              </div>
+              <div class="google-card__phone">
+                <div class="phone-bezel phone-bezel--sm" >
+                  <div class="phone-screen phone-screen--sm">
+                    <img src="assets/nyc-map-dark.png" alt="" class="phone-screen__map-img" />
+                    <div class="status-row status-row--sm">
+                      <span class="status-row__time" style="font-size:8px;">9:41</span>
+                      <div class="dynamic-island" style="width:40px;height:12px;"></div>
+                    </div>
+                    <div class="map-pin map-pin--red" style="left:65%;top:57%;"><img src="assets/pin-red.svg" alt=""><span>Katz's Deli</span></div>
+                    <div class="map-pin map-pin--green" style="left:17%;top:35%;"><img src="assets/pin-green.svg" alt=""><span>Sal's Corner Deli</span></div>
+                    <div class="map-pin map-pin--orange" style="left:56%;top:24%;"><img src="assets/pin-orange.svg" alt=""><span>Murray's Deli</span></div>
+                    <div class="map-pin map-pin--blue" style="left:43%;top:68%;"><img src="assets/pin-blue.svg" alt=""><span>Leo's Bagels &amp; Deli</span></div>
+                    <div class="map-pin map-pin--purple" style="left:28%;top:48%;"><img src="assets/pin-purple.svg" alt=""><span>Union Sq Deli</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="google-card__floating-search">
+                <img src="assets/search-icon-2.svg" alt="" />
+                <span>Food Open Near Me</span>
+              </div>
+              <p class="google-card__caption">Score #1 on local search rankings<br>in your neighborhood</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- panel 1: More Online Sales -->
+        <div class="tab-panel" data-panel="1">
+          <div class="tab-panel__left">
+            <p class="tab-panel__eyebrow">EVERY PLATFORM, CONNECTED</p>
+            <h3 class="tab-panel__title">Uber Eats, DoorDash,<br>Grubhub, and custom, no<br>commission solutions all in one place.</h3>
+          </div>
+          <div class="tab-panel__right tab-panel__right--sales">
+            <div class="sales-card">
+              <img src="assets/kitchen-phone-photo.png" alt="" class="sales-card__photo" />
+              <div class="sales-card__pill"><img src="assets/status-dot.svg" class="pulse-dot" alt=""><strong>DoorDash</strong><span class="connected">Connected</span></div>
+              <div class="sales-card__pill sales-card__pill--2"><img src="assets/status-dot.svg" class="pulse-dot" alt=""><strong>GrubHub</strong><span class="connected">Connected</span></div>
+              <div class="sales-card__pill sales-card__pill--3"><img src="assets/status-dot.svg" class="pulse-dot" alt=""><strong>Uber Eats</strong><span class="connected">Connected</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- panel 2: More Repeat Orders -->
+        <div class="tab-panel" data-panel="2">
+          <div class="tab-panel__left">
+            <p class="tab-panel__eyebrow">REVIEWS THAT KEEP GROWING</p>
+            <h3 class="tab-panel__title">Every happy customer<br>becomes a 5-star review.</h3>
+          </div>
+          <div class="tab-panel__right tab-panel__right--orders">
+            <div class="orders-card">
+              <img src="assets/cafe-review-photo.png" alt="" class="orders-card__photo" />
+              <div class="orders-card__pill">
+                <span class="stars">★★★★★</span>
+                <span class="orders-card__reviews"><span class="orders-card__reviews-num" id="reviewsCount">0</span> reviews</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9-CARD SERVICES GRID ============ -->
+  <section class="services-section" data-figma-node="15:1908">
+    <div class="services-header fade-on-scroll" data-figma-node="15:1909">
+      <h2 class="reveal-words" data-figma-node="15:1911">Everything you need to grow, handled.</h2>
+      <p class="services-header__subtitle" data-figma-node="15:1912">A complete growth system built for local restaurants, delis and food businesses.</p>
+      <p class="services-header__eyebrow" data-figma-node="15:1910">OUR SERVICES:</p>
+    </div>
+
+    <div class="services-grid" data-figma-node="15:1913">
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:1915">
+        <div class="service-card__snippet" data-figma-node="15:1916">
+          <div class="browser-frame">
+            <div class="browser-frame__bar" data-figma-node="15:1918">
+              <img src="assets/browser-dots.svg" alt="" class="browser-frame__dots" />
+              <div class="browser-frame__url"><img src="assets/lock-icon.svg" alt=""><span>yourbusiness.com</span></div>
+            </div>
+          </div>
+        </div>
+        <h3 class="service-card__title">Website</h3>
+        <p class="service-card__desc">A simple, professional website and online menu for your business, built to bring in more orders, not just look nice.</p>
+      </article>
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:1929">
+        <div class="service-card__snippet" data-figma-node="15:1930">
+          <div class="gmb-card">
+            <div class="gmb-card__icon"><img src="assets/map-pin-icon.svg" alt=""></div>
+            <div class="gmb-card__text">
+              <p class="gmb-card__name">3rd Avenue Deli</p>
+              <p class="gmb-card__meta">Food Nearby &bull; Open Now</p>
+            </div>
+          </div>
+        </div>
+        <h3 class="service-card__title">Show Up on Google</h3>
+        <p class="service-card__desc">We make sure your business appears when people search for food nearby, on Google Search and Google Maps, with your hours, photos, and menu all filled in correctly.</p>
+      </article>
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:1941">
+        <div class="service-card__snippet" data-figma-node="15:1942">
+          <div class="metric-card">
+            <div class="metric-card__text">
+              <p class="metric-card__label">SEARCHES FOUND</p>
+              <p class="metric-card__value">+800%</p>
+            </div>
+            <img src="assets/sparkline.svg" alt="" class="metric-card__sparkline">
+          </div>
+        </div>
+        <h3 class="service-card__title">Neighborhood Popularity</h3>
+        <p class="service-card__desc">Ongoing work behind the scenes so more people searching nearby actually find you first, plus your menu built out online so customers can see what you sell before they even call.</p>
+      </article>
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:1955">
+        <div class="service-card__snippet" data-figma-node="15:1956">
+          <div class="app-status-list">
+            <div class="app-status-row"><span>DoorDash</span><span class="app-status-row__live"><img src="assets/live-dot.svg" class="pulse-dot" alt="">Live</span></div>
+            <div class="app-status-row"><span>Uber Eats</span><span class="app-status-row__live"><img src="assets/live-dot.svg" class="pulse-dot" alt="">Live</span></div>
+          </div>
+        </div>
+        <h3 class="service-card__title">Delivery App Setup</h3>
+        <p class="service-card__desc">We get you live on Uber Eats, DoorDash, Grubhub, and any other delivery app your customers use, menu, photos, and pricing all done for you. Commission-free options available.</p>
+      </article>
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:1970">
+        <div class="service-card__snippet" data-figma-node="15:1971">
+          <div class="reviews-card">
+            <div class="reviews-card__stars">
+              <img src="assets/star-icon.svg" alt=""><img src="assets/star-icon.svg" alt=""><img src="assets/star-icon.svg" alt=""><img src="assets/star-icon.svg" alt=""><img src="assets/star-icon.svg" alt="">
+            </div>
+            <div class="reviews-card__count"><strong>100</strong><span>Ratings</span></div>
+          </div>
+        </div>
+        <h3 class="service-card__title">More 5-Star Reviews</h3>
+        <p class="service-card__desc">We help turn your happy customers into reviews, automatically, plus a simple tap card at your counter that makes leaving a review take five seconds.</p>
+      </article>
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:1989">
+        <div class="service-card__snippet" data-figma-node="15:1991">
+          <img src="assets/marketing-campaign-graphic.svg" alt="" class="marketing-graphic">
+        </div>
+        <h3 class="service-card__title">Marketing Campaigns</h3>
+        <p class="service-card__desc">Real-world outreach in your neighborhood, so people nearby know about you before they even open an app.</p>
+      </article>
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:2003">
+        <div class="service-card__snippet" data-figma-node="15:2005">
+          <div class="chat-bubble-row">
+            <img src="assets/blue-avatar-circle.svg" alt="" class="chat-bubble-row__avatar">
+            <div class="chat-bubble">I'd like to place an order</div>
+          </div>
+        </div>
+        <h3 class="service-card__title">Order Straight From You</h3>
+        <p class="service-card__desc">Customers message you directly to place an order, no middleman, no extra fees taken out.</p>
+      </article>
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:2011">
+        <div class="service-card__snippet" data-figma-node="15:2013">
+          <div class="route-card">
+            <div class="route-card__left"><span class="route-card__icon"><img src="assets/truck-icon.svg" alt=""></span><span>Route Active</span></div>
+            <div class="route-card__right"><img src="assets/route-dot.svg" alt=""><span class="route-card__line"></span><img src="assets/flag-triangle.svg" alt=""></div>
+          </div>
+        </div>
+        <h3 class="service-card__title">Your Own Delivery Team</h3>
+        <p class="service-card__desc">We help you hire your own drivers, so you keep more of every sale instead of losing a cut to delivery apps.</p>
+      </article>
+
+      <article class="service-card fade-on-scroll" data-figma-node="15:2026">
+        <div class="service-card__snippet" data-figma-node="15:2028">
+          <div class="call-pill">
+            <span class="call-pill__left"><img src="assets/phone-call-icon.svg" alt="">Incoming Order</span>
+            <span class="call-pill__waveform">
+              <span class="wf-bar wf-bar--1"></span><span class="wf-bar wf-bar--2"></span><span class="wf-bar wf-bar--3"></span><span class="wf-bar wf-bar--4"></span><span class="wf-bar wf-bar--5"></span>
+            </span>
+          </div>
+        </div>
+        <h3 class="service-card__title">Answer Every Call</h3>
+        <p class="service-card__desc">Even when your phone won't stop ringing, every call gets answered and every order gets taken and sent straight to your counter with our new AI ordering technology.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer fade-on-scroll" data-figma-node="15:2073">
+    <div class="site-footer__bg" data-figma-node="15:2074">
+      <img src="assets/footer-app-screen.png" alt="" class="site-footer__app-img" data-figma-node="15:2075" />
+      <div class="site-footer__content" data-figma-node="15:2076">
+        <h2 class="reveal-words" data-figma-node="15:2079">Have Questions?</h2>
+        <div class="site-footer__links" data-figma-node="15:2080">
+          <a href="#" class="btn btn--white-pill" data-figma-node="15:2081">Get a free demo</a>
+          <a href="#" class="btn btn--translucent-pill" data-figma-node="15:2084">See how it works</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
