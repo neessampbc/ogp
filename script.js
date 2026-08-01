@@ -58,7 +58,61 @@
 
   function fireReveal(target) {
     if (target.classList.contains('reveal-words')) revealWords(target);
-    else target.classList.add('is-visible');
+    else {
+      target.classList.add('is-visible');
+      if (target.classList.contains('service-card')) animateServiceCardExtras(target);
+    }
+  }
+
+  /* ============ service card micro-animations (count-ups, typing, etc.) ============ */
+  function animateServiceCardExtras(card) {
+    // count-up numbers: the "+800%" search metric and the "100" ratings count
+    card.querySelectorAll('[data-count-to]').forEach(function (el) {
+      var target = parseFloat(el.dataset.countTo);
+      if (reducedMotion) { el.textContent = target; return; }
+      var duration = 1100;
+      var start = null;
+      function frame(ts) {
+        if (start === null) start = ts;
+        var t = Math.min(1, (ts - start) / duration);
+        el.textContent = Math.round(easeOutCubic(t) * target);
+        if (t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    });
+
+    // browser address bar types the domain in rather than just showing it
+    var urlText = card.querySelector('[data-type-text]');
+    if (urlText) {
+      var fullUrl = urlText.dataset.typeText;
+      if (reducedMotion) {
+        urlText.textContent = fullUrl;
+        urlText.classList.add('is-done');
+      } else {
+        var ci = 0;
+        (function typeStep() {
+          ci++;
+          urlText.textContent = fullUrl.slice(0, ci);
+          if (ci < fullUrl.length) setTimeout(typeStep, 70 + Math.random() * 40);
+          else urlText.classList.add('is-done');
+        })();
+      }
+    }
+
+    // chat bubble: a brief typing indicator before the message itself appears
+    var typingBubble = card.querySelector('.chat-bubble--typing');
+    var msgBubble = card.querySelector('.chat-bubble--msg');
+    if (typingBubble && msgBubble) {
+      if (reducedMotion) {
+        msgBubble.classList.add('is-shown');
+      } else {
+        setTimeout(function () { typingBubble.classList.add('is-shown'); }, 300);
+        setTimeout(function () {
+          typingBubble.classList.remove('is-shown');
+          msgBubble.classList.add('is-shown');
+        }, 1500);
+      }
+    }
   }
 
   var hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
@@ -422,15 +476,5 @@
     tabVisIO.observe(growthTabsEl);
   }
 
-  /* ============ service card hover glow that follows cursor ============ */
-  document.querySelectorAll('.service-card').forEach(function (card) {
-    card.addEventListener('mousemove', function (e) {
-      var rect = card.getBoundingClientRect();
-      var x = ((e.clientX - rect.left) / rect.width) * 100;
-      var y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--mx', x + '%');
-      card.style.setProperty('--my', y + '%');
-    });
-  });
 
 })();
