@@ -285,7 +285,7 @@
   /* ============ Google-results pins: staggered pop-in + "you" ping (More Google Traffic tab) ============ */
   var googlePins = Array.prototype.slice.call(document.querySelectorAll('.map-pin[data-pin-order]'))
     .sort(function (a, b) { return (+a.dataset.pinOrder) - (+b.dataset.pinOrder); });
-  var googleSearchPill = document.querySelector('.google-card__floating-search');
+  var googleSearchPill = document.querySelector('.google-card__search');
   var youPin = document.querySelector('.map-pin--you');
 
   function animateGoogleCardPins() {
