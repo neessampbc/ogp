@@ -146,6 +146,63 @@
     </div>
   </section>
 
+  <!-- ============ PARTNER LOGO MARQUEE ============ -->
+  <section class="partners fade-on-scroll">
+    <p class="partners__label">We get you set up (and stay in sync) everywhere customers look</p>
+    <div class="partners__rows">
+      <div class="partners__row">
+        <div class="partners__track">
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/doordash/EB1700" alt="DoorDash" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/yelp/FF1A1A" alt="Yelp" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/google" alt="Google Business Profile" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#FF8000;">Grubhub</span></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/square" alt="Square" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/tripadvisor/34E0A1" alt="TripAdvisor" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#FF4C00;">Toast</span></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="WhatsApp" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#00A652;">Nextdoor</span></div>
+        </div>
+        <div class="partners__track" aria-hidden="true">
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/doordash/EB1700" alt="" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/yelp/FF1A1A" alt="" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/google" alt="" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/facebook/1877F2" alt="" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#FF8000;">Grubhub</span></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/square" alt="" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/tripadvisor/34E0A1" alt="" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#FF4C00;">Toast</span></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/whatsapp/25D366" alt="" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#00A652;">Nextdoor</span></div>
+        </div>
+      </div>
+      <div class="partners__row partners__row--rev">
+        <div class="partners__track partners__track--rev">
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/ubereats/06C167" alt="Uber Eats" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/googlemaps" alt="Google Maps" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#1A1A1A;">Seamless</span></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#E4002B;">Slice</span></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/waze/33CCFF" alt="Waze" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#ED1C24;">ChowNow</span></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/tiktok" alt="TikTok" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#00B140;">Clover</span></div>
+        </div>
+        <div class="partners__track partners__track--rev" aria-hidden="true">
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/ubereats/06C167" alt="" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/googlemaps" alt="" /></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/instagram/E4405F" alt="" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#1A1A1A;">Seamless</span></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#E4002B;">Slice</span></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/waze/33CCFF" alt="" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#ED1C24;">ChowNow</span></div>
+          <div class="partner-chip"><img src="https://cdn.simpleicons.org/tiktok" alt="" /></div>
+          <div class="partner-chip partner-chip--text"><span style="color:#00B140;">Clover</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ TRAFFIC / SALES / ORDERS SECTION ============ -->
   <section class="growth-section" data-figma-node="1:83">
     <div class="growth-hero" data-figma-node="7:1097">
@@ -185,19 +242,24 @@
     </div>
 
     <div class="growth-tabs fade-on-scroll" data-figma-node="7:1467">
-      <div class="tab-row" data-figma-node="11:105" role="tablist">
-        <button class="tab is-active" data-tab="0" data-figma-node="11:106" role="tab" aria-selected="true">
-          <span>More Google Traffic</span>
-          <span class="tab__underline"></span>
-        </button>
-        <button class="tab" data-tab="1" data-figma-node="11:109" role="tab" aria-selected="false">
-          <span>More Online Sales</span>
-          <span class="tab__underline"></span>
-        </button>
-        <button class="tab" data-tab="2" data-figma-node="11:112" role="tab" aria-selected="false">
-          <span>More Repeat Orders</span>
-          <span class="tab__underline"></span>
-        </button>
+      <!-- tab-row-wrap adds a fade + scroll-hint on narrow screens where the row
+           genuinely overflows (the 3rd label was hard-clipped mid-word with no
+           indication it was scrollable) -->
+      <div class="tab-row-wrap">
+        <div class="tab-row" data-figma-node="11:105" role="tablist">
+          <button class="tab is-active" data-tab="0" data-figma-node="11:106" role="tab" aria-selected="true">
+            <span>More Google Traffic</span>
+            <span class="tab__underline"></span>
+          </button>
+          <button class="tab" data-tab="1" data-figma-node="11:109" role="tab" aria-selected="false">
+            <span>More Online Sales</span>
+            <span class="tab__underline"></span>
+          </button>
+          <button class="tab" data-tab="2" data-figma-node="11:112" role="tab" aria-selected="false">
+            <span>More Repeat Orders</span>
+            <span class="tab__underline"></span>
+          </button>
+        </div>
       </div>
 
       <div class="tab-card" id="tabCard" data-figma-node="11:115">

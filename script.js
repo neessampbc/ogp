@@ -349,6 +349,11 @@
     tabs[index].setAttribute('aria-selected', 'true');
     panels[index].classList.add('is-active');
 
+    // on narrow screens the tab row scrolls horizontally — without this, an
+    // auto-advance to a tab scrolled out of view leaves no visible indication
+    // anything changed
+    tabs[index].scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', inline: 'nearest', block: 'nearest' });
+
     if (index === 0) animateGoogleCardPins();
     if (index === 2) animateReviewsCount();
 

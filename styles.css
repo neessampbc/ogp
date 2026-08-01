@@ -359,6 +359,64 @@ a { text-decoration: none; color: inherit; }
 .cta-bar__input span { font-family: var(--font-inter); font-size: clamp(14px, 2vw + 8px, 24px); color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cta-bar__btn { height: clamp(44px, 6vw, 52px); font-size: clamp(14px, 1.3vw + 9px, 22px); padding: 0 clamp(16px, 2.5vw, 24px); flex-shrink: 0; white-space: nowrap; }
 
+/* =========================== PARTNER LOGO MARQUEE =========================== */
+/* Same technique owner.com uses for its dual-direction reviews marquee: each
+   row's track is duplicated back-to-back so translateX(-100%)/translateX(100%)
+   loops seamlessly into an identical copy, animation-timing-function is
+   linear + infinite, and the section just clips overflow rather than fading
+   the edges. Two rows scroll opposite directions for visual interest. */
+.partners { padding: clamp(20px, 4vw, 32px) 0 clamp(28px, 5vw, 44px); }
+.partners__label {
+  text-align: center;
+  font-family: var(--font-inter);
+  font-weight: 600;
+  font-size: clamp(13px, 0.6vw + 11px, 15px);
+  color: var(--gray-600);
+  margin: 0 0 clamp(16px, 3vw, 24px);
+  padding: 0 20px;
+}
+.partners__rows { display: flex; flex-direction: column; gap: 14px; }
+.partners__row {
+  overflow: hidden;
+  display: flex;
+  width: 100%;
+  /* soft fade at the left/right edges so chips don't hard-cut at the viewport edge */
+  mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
+}
+.partners__track {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 14px;
+  flex-shrink: 0;
+  animation: partnersScrollLeft 34s linear infinite;
+}
+.partners__track--rev { animation-name: partnersScrollRight; animation-duration: 30s; }
+@keyframes partnersScrollLeft { 100% { transform: translateX(-100%); } }
+@keyframes partnersScrollRight { 100% { transform: translateX(100%); } }
+
+.partner-chip {
+  flex-shrink: 0;
+  height: 56px;
+  min-width: 130px;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--border-mid);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+.partner-chip img { height: 26px; width: auto; max-width: 110px; }
+.partner-chip--text span { font-family: var(--font-sora); font-weight: 800; font-size: 17px; letter-spacing: -0.4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .partners__track { animation: none !important; }
+  .partners__row { overflow-x: auto; }
+}
+
 /* =========================== GROWTH / TABS SECTION =========================== */
 .growth-section { background: #f2f2f2; margin-top: 24px; }
 .growth-hero {
@@ -440,7 +498,33 @@ a { text-decoration: none; color: inherit; }
 .growth-cta-bar-slot .cta-bar { padding: clamp(14px, 2.5vw, 20px) clamp(12px, 2vw, 17px) clamp(14px, 2.5vw, 20px) clamp(20px, 4vw, 44px); height: auto; min-height: 72px; }
 
 .growth-tabs { max-width: 1440px; margin: 0 auto; padding: clamp(36px, 7vw, 71px) clamp(16px, 3vw, 20px); }
-.tab-row { display: flex; gap: clamp(16px, 3.5vw, 40px); overflow-x: auto; }
+/* below ~640px the 3 tab labels don't all fit and the row scrolls — without
+   this, the 3rd label ("More Repeat Orders") just hard-clips mid-word at the
+   screen edge with no indication there's more to scroll to. The fade signals
+   "more content this way"; scrollbar is hidden since the fade is the affordance. */
+.tab-row-wrap { position: relative; }
+.tab-row-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 32px;
+  background: linear-gradient(to right, rgba(242,242,242,0), var(--bg-soft));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+@media (max-width: 640px) {
+  .tab-row-wrap::after { opacity: 1; }
+}
+.tab-row {
+  display: flex;
+  gap: clamp(16px, 3.5vw, 40px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-row::-webkit-scrollbar { display: none; }
 .tab {
   display: flex;
   flex-direction: column;
