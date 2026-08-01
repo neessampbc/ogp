@@ -198,13 +198,15 @@ a { text-decoration: none; color: inherit; }
 .hero-panel__subtitle strong { font-weight: 700; }
 
 /* offsets below are exact ratios of the 1150x555 "Background Container" (node 1:77):
-   phone (node 7:749) sits at abs x919,y260,w309.53,h495.6 -> left 67.3%/top -13.15%/w 26.9%
+   phone (node 7:749) sits at left 67.3%/top -13.15% (position only — width is a fixed
+   262px at all screen sizes, not the Figma-ratio 26.9%, so the phone's proportions never
+   distort as its position shifts with the panel's width)
    CTA bar (node 5:55) sits at abs x212,y770,w1020,h72 -> left 5.83%/top 78.7%/w 88.7% */
 .hero-phone-slot {
   position: absolute;
   left: 67.3%;
   top: -13.15%;
-  width: 26.9%;
+  width: 262px;
   z-index: 2;
 }
 .cta-bar-slot {
@@ -820,7 +822,6 @@ a { text-decoration: none; color: inherit; }
   .hero-phone-slot {
     position: static;
     left: auto; top: auto;
-    width: 262px;
     margin: 24px auto 0;
   }
   .cta-bar-slot {
