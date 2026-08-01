@@ -296,48 +296,40 @@
           </div>
           <div class="tab-panel__right tab-panel__right--google">
             <div class="google-card">
-              <!-- one cluster (info column + phone) instead of three elements
-                   pinned to separate corners with dead space between them.
-                   Row at desktop (uses the panel's wide-but-height-limited
-                   space efficiently), column stack on narrow/tall mobile. -->
-              <div class="google-card__cluster">
-                <div class="google-card__info">
-                  <div class="google-card__badge">
-                    <img src="assets/google-logo.svg" alt="Google" />
-                  </div>
-
-                  <div class="google-card__search">
-                    <img src="assets/search-icon-2.svg" alt="" />
-                    <span class="google-card__search-text" aria-label="Food Open Near Me">
-                      <span id="googleSearchTyped" aria-hidden="true"></span><span class="google-card__search-cursor" aria-hidden="true"></span>
-                    </span>
-                  </div>
-
-                  <p class="google-card__caption">Score #1 on local search rankings in your neighborhood</p>
+              <!-- one simple centered column: search bar overlaying the top of
+                   the phone, caption below. Google's logo lives inside the
+                   search bar itself (logo | input), not as a separate piece
+                   stacked above it. -->
+              <div class="google-card__phone-wrap">
+                <div class="google-card__search">
+                  <img src="assets/google-logo.svg" alt="Google" class="google-card__search-logo" />
+                  <span class="google-card__search-divider" aria-hidden="true"></span>
+                  <img src="assets/search-icon-2.svg" alt="" class="google-card__search-icon" />
+                  <span class="google-card__search-text" aria-label="Food Open Near Me">
+                    <span id="googleSearchTyped" aria-hidden="true"></span><span class="google-card__search-cursor" aria-hidden="true"></span>
+                  </span>
                 </div>
-
-                <div class="google-card__phone">
-                  <div class="phone-bezel phone-bezel--sm">
-                    <div class="phone-screen phone-screen--sm">
-                      <img src="assets/nyc-map-dark-v2.png" alt="" class="phone-screen__map-img" />
-                      <div class="status-row status-row--sm">
-                        <span class="status-row__time" style="font-size:8px;">9:41</span>
-                        <div class="dynamic-island" style="width:40px;height:12px;"></div>
-                      </div>
-                      <div class="map-pin map-pin--green" data-pin-order="1" style="left:17%;top:35%;"><img src="assets/pin-green.svg" alt=""><span>Sal's Corner Deli</span></div>
-                      <div class="map-pin map-pin--orange" data-pin-order="2" style="left:56%;top:24%;"><img src="assets/pin-orange.svg" alt=""><span>Murray's Deli</span></div>
-                      <div class="map-pin map-pin--purple" data-pin-order="3" style="left:28%;top:48%;"><img src="assets/pin-purple.svg" alt=""><span>Union Sq Deli</span></div>
-                      <div class="map-pin map-pin--blue" data-pin-order="4" style="left:43%;top:68%;"><img src="assets/pin-blue.svg" alt=""><span>Leo's Bagels &amp; Deli</span></div>
-                      <div class="map-pin map-pin--you" data-pin-order="5" style="left:65%;top:57%;">
-                        <span class="map-pin__ping" aria-hidden="true"></span>
-                        <img src="assets/pin-red.svg" alt="">
-                        <span class="map-pin__label">Katz's Deli</span>
-                        <span class="map-pin__badge">#1</span>
-                      </div>
+                <div class="phone-bezel phone-bezel--sm">
+                  <div class="phone-screen phone-screen--sm">
+                    <img src="assets/nyc-map-dark-v2.png" alt="" class="phone-screen__map-img" />
+                    <div class="status-row status-row--sm">
+                      <span class="status-row__time" style="font-size:8px;">9:41</span>
+                      <div class="dynamic-island" style="width:40px;height:12px;"></div>
+                    </div>
+                    <div class="map-pin map-pin--green" data-pin-order="1" style="left:17%;top:35%;"><img src="assets/pin-green.svg" alt=""><span>Sal's Corner Deli</span></div>
+                    <div class="map-pin map-pin--orange" data-pin-order="2" style="left:56%;top:24%;"><img src="assets/pin-orange.svg" alt=""><span>Murray's Deli</span></div>
+                    <div class="map-pin map-pin--purple" data-pin-order="3" style="left:28%;top:48%;"><img src="assets/pin-purple.svg" alt=""><span>Union Sq Deli</span></div>
+                    <div class="map-pin map-pin--blue" data-pin-order="4" style="left:43%;top:68%;"><img src="assets/pin-blue.svg" alt=""><span>Leo's Bagels &amp; Deli</span></div>
+                    <div class="map-pin map-pin--you" data-pin-order="5" style="left:65%;top:57%;">
+                      <span class="map-pin__ping" aria-hidden="true"></span>
+                      <img src="assets/pin-red.svg" alt="">
+                      <span class="map-pin__label">Katz's Deli</span>
+                      <span class="map-pin__badge">#1</span>
                     </div>
                   </div>
                 </div>
               </div>
+              <p class="google-card__caption">Score #1 on local search rankings in your neighborhood</p>
             </div>
           </div>
         </div>

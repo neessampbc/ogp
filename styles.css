@@ -595,71 +595,37 @@ a { text-decoration: none; color: inherit; }
 .tab-panel__desc { font-family: var(--font-inter); font-size: clamp(14px, 0.6vw + 12px, 17px); line-height: 1.5; color: var(--gray-600); margin: 0; max-width: 420px; }
 .tab-panel__right { flex: 1; min-width: 0; position: relative; overflow: hidden; }
 
-/* google panel visual — one cluster (info column + phone), not three
-   elements pinned to separate corners with a lot of dead space between
-   them. Desktop-first: row layout, since the panel is wide but height-
-   capped (tab-card is a fixed 650px) — a pure vertical stack would need
-   more height than that at a size big enough to not look small, which is
-   exactly what a plain column stack did here before (verified: it pushed
-   the caption below the visible area). Row spends the panel's abundant
-   width instead of fighting its scarce height. Stacks back to a column
-   below 860px, in the same breakpoint everything else in this tab already
-   switches at, where height is no longer capped.
-   Border-radius matches the sales-card/orders-card panels (16px, was 8px). */
+/* google panel visual — a simple centered column: the search bar (Google
+   logo + input in ONE bar, not stacked as separate pieces) overlays the top
+   of the phone, caption below. Much shorter than the old badge+search+
+   gap+phone+caption stack, which needed a 560px min-height on mobile to
+   avoid clipping — this fits comfortably in a fraction of that.
+   Border-radius matches .tab-card (24px), the container this sits inside —
+   it was 16px before, visibly inconsistent with the parent's curve at the
+   corners where the two share an edge. */
 .google-card {
   position: absolute;
   inset: 0;
   background: var(--blue-accent);
   background-image: linear-gradient(135deg, #1a4de5, #2f5fe8);
-  border-radius: 16px;
+  border-radius: 24px;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: clamp(16px, 3vw, 26px);
   padding: clamp(20px, 4vw, 40px);
 }
-.google-card__cluster {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(20px, 4vw, 56px);
-  max-width: 100%;
-  max-height: 100%;
-}
-.google-card__info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(14px, 2vw, 22px);
-  flex-shrink: 0;
-  /* without this, this column's own flex-basis:auto sizing pulls in the
-     caption's *unwrapped* single-line max-content width (~500px+) instead
-     of its actual wrapped size, ballooning the gap to the phone. */
-  max-width: min(320px, 32vw);
-}
-.google-card__badge {
-  flex-shrink: 0;
-  width: clamp(140px, 12vw, 190px);
-  height: clamp(44px, 4vw, 58px);
-  background: #f5f5f5;
-  border: 1px solid #f0f0f0;
-  border-radius: 15px;
-  box-shadow: 0 4px 4px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.google-card__badge img { height: 48%; max-height: 30px; }
 
-/* aspect-ratio makes it (and everything positioned as a % of it) scale
-   cleanly at any width without a transform:scale() mobile hack. Sized
-   meaningfully bigger than its old 175px cap — that read as small against
-   how much room this panel actually has. */
-.google-card__phone {
+/* aspect-ratio makes it (and everything positioned as a % of it, including
+   the map pins) scale cleanly at any width without a transform:scale()
+   mobile hack. Sized meaningfully bigger than its old 175px cap — that
+   read as small against how much room this panel actually has. */
+.google-card__phone-wrap {
   position: relative;
-  width: clamp(160px, 15vw, 230px);
+  width: clamp(160px, 18vw, 230px);
   aspect-ratio: 175 / 352;
-  flex-shrink: 0;
 }
 .phone-bezel--sm { border-radius: 34px; padding: clamp(4px, 1.4vw, 6px); }
 .phone-screen--sm { border-radius: 28px; position: relative; height: auto; aspect-ratio: 163 / 340; overflow: hidden; padding: 0; }
@@ -731,25 +697,35 @@ a { text-decoration: none; color: inherit; }
 /* a distinct step in the cluster's story (Google -> what you'd type -> the
    result), not an overlay awkwardly floating on top of the phone. Sized as
    a real search bar, not a small pill lost in a big blue panel. */
+/* the search bar itself: Google's logo directly to the left of the input,
+   in one bar (not a separate badge stacked above it) — and it overlays the
+   phone's top edge rather than sitting apart from it in its own slot. */
 .google-card__search {
-  flex-shrink: 0;
-  width: clamp(180px, 20vw, 260px);
+  position: absolute;
+  top: clamp(-18px, -3.5vw, -10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: max-content;
+  max-width: 230%;
   background: #fff;
   border-radius: 999px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.22);
   display: flex;
   align-items: center;
-  gap: clamp(8px, 1.4vw, 12px);
-  padding: clamp(10px, 1.6vw, 14px) clamp(14px, 2vw, 18px);
+  gap: clamp(6px, 1.2vw, 10px);
+  padding: clamp(7px, 1.5vw, 11px) clamp(12px, 2.2vw, 16px);
   font-family: var(--font-inter);
-  font-size: clamp(12px, 1.3vw, 15px);
+  font-size: clamp(10px, 2vw, 13px);
   color: #000;
+  white-space: nowrap;
   opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 0.5s var(--ease-soft), transform 0.5s var(--ease-soft);
+  transition: opacity 0.5s var(--ease-soft);
 }
-.google-card__search.is-shown { opacity: 1; transform: translateY(0); }
-.google-card__search img { width: clamp(13px, 1.4vw, 17px); flex-shrink: 0; }
+.google-card__search.is-shown { opacity: 1; }
+.google-card__search-logo { height: clamp(11px, 1.7vw, 15px); flex-shrink: 0; }
+.google-card__search-divider { width: 1px; height: clamp(14px, 2.2vw, 18px); background: #e2e2e2; flex-shrink: 0; }
+.google-card__search-icon { width: clamp(11px, 1.7vw, 15px); flex-shrink: 0; }
 .google-card__search-cursor {
   display: inline-block;
   width: 1px;
@@ -763,16 +739,15 @@ a { text-decoration: none; color: inherit; }
 
 .google-card__caption {
   flex-shrink: 0;
-  width: max-content;
-  max-width: min(320px, 90%);
+  max-width: min(280px, 85%);
   font-family: var(--font-sora);
   font-weight: 700;
-  font-size: clamp(14px, 1.6vw, 19px);
+  font-size: clamp(13px, 1.7vw, 17px);
   color: rgba(255,255,255,0.95);
-  letter-spacing: -0.6px;
-  line-height: 1.25;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
   margin: 0;
-  text-align: left;
+  text-align: center;
 }
 
 /* sales panel visual */
@@ -1238,22 +1213,18 @@ a { text-decoration: none; color: inherit; }
   .growth-cta-bar-slot .cta-bar__btn { width: 100%; }
 
   /* the two-column tab layout (fixed-width text column + visual column) no
-     longer has room to sit side by side, so panels stack vertically. */
+     longer has room to sit side by side, so panels stack vertically. Gap
+     is needed here specifically — .tab-panel__left's own padding provided
+     the visual breathing room from .tab-panel__right in the row layout,
+     but in this stacked column it left literally 0px between the title
+     and the panel below it. */
   .tab-card { height: auto; }
-  .tab-panel { position: relative; flex-direction: column; }
+  .tab-panel { position: relative; flex-direction: column; gap: 24px; }
   .tab-panel.is-active { display: flex; }
   .tab-panel:not(.is-active) { display: none; }
   .tab-panel__left { flex: none; padding: 32px 24px 0; }
   .tab-panel__right { min-height: 360px; }
-
-  /* below 860px the row layout (info column beside the phone) no longer
-     has room to sit side by side, so it stacks into a column instead —
-     height isn't capped here (.tab-card is auto below this breakpoint),
-     so a vertical stack is exactly the right call at this size. */
-  .google-card__cluster { flex-direction: column; }
-  .google-card__info { align-items: center; }
-  .google-card__caption { text-align: center; }
-  .tab-panel__right--google { min-height: 560px; }
+  .tab-panel__right--google { min-height: 460px; }
 
   /* .sales-card / .orders-card were built as fixed-px compositions (pills
      positioned with absolute left/top values) sized for the wide flex:1
