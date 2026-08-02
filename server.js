@@ -280,12 +280,91 @@ function computeScore(details, pageSpeed, competitors) {
     grade: grade(total),
     estimatedMonthlyLoss,
     categories: {
-      searchResults: { points: searchResultsPts, max: 40, grade: grade((searchResultsPts / 40) * 100) },
-      guestExperience: { points: guestExperiencePts, max: 40, grade: grade((guestExperiencePts / 40) * 100) },
-      localListings: { points: localListingsPts, max: 20, grade: grade((localListingsPts / 20) * 100) },
+      searchResults: {
+        points: searchResultsPts, max: 40, grade: grade((searchResultsPts / 40) * 100),
+        metrics: {
+          website: details.websiteUri || null,
+          seo: { points: seoPts, max: 20, score: (!details.websiteUri || pageSpeed.error) ? null : pageSpeed.seo },
+          performance: { points: perfPts, max: 20, score: (!details.websiteUri || pageSpeed.error) ? null : pageSpeed.performance },
+          pageSpeedError: details.websiteUri ? (pageSpeed.error || null) : null,
+        },
+      },
+      guestExperience: {
+        points: guestExperiencePts, max: 40, grade: grade((guestExperiencePts / 40) * 100),
+        metrics: {
+          rating: { points: ratingPts, max: 20, value: rating },
+          reviews: { points: reviewPts, max: 10, ownCount: ownReviewCount, avgCompetitorCount: avgCompetitorCount > 0 ? Math.round(avgCompetitorCount) : null },
+          photos: { points: photoPts, max: 10, count: photoCount },
+        },
+      },
+      localListings: {
+        points: localListingsPts, max: 20, grade: grade((localListingsPts / 20) * 100),
+        metrics: {
+          completeness: {
+            points: completenessPts, max: 10,
+            website: !!details.websiteUri,
+            phone: !!(details.nationalPhoneNumber || details.internationalPhoneNumber),
+            hours: hasHours,
+            category: !!details.primaryType,
+            status: details.businessStatus || 'unknown',
+          },
+          delivery: { points: deliveryPts, max: 10, note: 'needs manual verification' },
+        },
+      },
     },
+    competitors: competitors.map((c) => ({
+      name: c.displayName ? c.displayName.text : '(unnamed)',
+      rating: c.rating != null ? c.rating : null,
+      userRatingCount: c.userRatingCount || 0,
+    })),
     findings,
   };
+}
+
+/* human-readable breakdown of every score and metric above — this is what
+   lands in the Sheet's "Findings Summary" column, so staff can reply on
+   WhatsApp straight from it without re-deriving anything (not just the
+   flagged problems the teaser highlights). */
+function buildFullReport(score) {
+  const lines = [];
+  const pct = (n) => (n != null ? `${n}/100` : 'unavailable');
+
+  lines.push(`OVERALL: ${score.total}/100 (${score.grade}) — Est. $${score.estimatedMonthlyLoss.toLocaleString('en-US')}/mo in lost orders`);
+
+  const sr = score.categories.searchResults;
+  lines.push('', `SEARCH RESULTS: ${sr.points}/${sr.max} (${sr.grade})`);
+  lines.push(`  - Website: ${sr.metrics.website || 'none found'}`);
+  if (sr.metrics.website) {
+    lines.push(`  - SEO fundamentals: ${sr.metrics.seo.points}/${sr.metrics.seo.max} (Lighthouse SEO score ${pct(sr.metrics.seo.score)})`);
+    lines.push(`  - Speed & mobile: ${sr.metrics.performance.points}/${sr.metrics.performance.max} (Lighthouse Performance score ${pct(sr.metrics.performance.score)}, mobile)`);
+    if (sr.metrics.pageSpeedError) lines.push(`  - Note: couldn't fully analyze the website (${sr.metrics.pageSpeedError})`);
+  }
+
+  const ge = score.categories.guestExperience;
+  lines.push('', `GUEST EXPERIENCE: ${ge.points}/${ge.max} (${ge.grade})`);
+  lines.push(`  - Rating: ${ge.metrics.rating.points}/${ge.metrics.rating.max} (${ge.metrics.rating.value.toFixed(1)}/5 stars)`);
+  lines.push(`  - Review volume: ${ge.metrics.reviews.points}/${ge.metrics.reviews.max} (${ge.metrics.reviews.ownCount.toLocaleString('en-US')} reviews${ge.metrics.reviews.avgCompetitorCount ? ` vs. nearby average of ${ge.metrics.reviews.avgCompetitorCount.toLocaleString('en-US')}` : ''})`);
+  lines.push(`  - Photos: ${ge.metrics.photos.points}/${ge.metrics.photos.max} (${ge.metrics.photos.count} photo${ge.metrics.photos.count === 1 ? '' : 's'} on Google Business Profile)`);
+
+  const ll = score.categories.localListings;
+  const c = ll.metrics.completeness;
+  lines.push('', `LOCAL LISTINGS: ${ll.points}/${ll.max} (${ll.grade})`);
+  lines.push(`  - Profile completeness: ${c.points}/${c.max} (Website: ${c.website ? 'yes' : 'no'}, Phone: ${c.phone ? 'yes' : 'no'}, Hours: ${c.hours ? 'yes' : 'no'}, Category: ${c.category ? 'yes' : 'no'}, Status: ${c.status})`);
+  lines.push(`  - Delivery app presence: ${ll.metrics.delivery.points}/${ll.metrics.delivery.max} (DoorDash/Uber Eats/Grubhub — ${ll.metrics.delivery.note})`);
+
+  if (score.competitors && score.competitors.length) {
+    lines.push('', 'NEARBY COMPETITORS COMPARED:');
+    score.competitors.forEach((comp) => {
+      lines.push(`  - ${comp.name} — ${comp.rating != null ? comp.rating.toFixed(1) : '?'}★, ${comp.userRatingCount.toLocaleString('en-US')} reviews`);
+    });
+  }
+
+  if (score.findings && score.findings.length) {
+    lines.push('', 'FLAGGED ISSUES:');
+    score.findings.forEach((f) => lines.push(`  - ${f.text}`));
+  }
+
+  return lines.join('\n');
 }
 
 /* =========================================================
@@ -412,6 +491,7 @@ async function handleScan(req, res) {
     const competitors = await nearbyCompetitors(details.location, details.primaryType, details.id).catch(() => []);
     const pageSpeed = await pageSpeedScores(details.websiteUri);
     const score = computeScore(details, pageSpeed, competitors);
+    score.fullReport = buildFullReport(score);
 
     sendJson(res, 200, {
       business: {
@@ -458,9 +538,9 @@ async function handleLead(req, res) {
     return sendJson(res, 500, { error: 'Lead capture is not configured yet.' });
   }
 
-  const findingsSummary = Array.isArray(score.findings)
-    ? score.findings.map((f) => f.text).join(' | ').slice(0, 2000)
-    : '';
+  const findingsSummary = typeof score.fullReport === 'string'
+    ? score.fullReport.slice(0, 4000)
+    : (Array.isArray(score.findings) ? score.findings.map((f) => f.text).join(' | ').slice(0, 2000) : '');
 
   const row = [
     new Date().toISOString(),
