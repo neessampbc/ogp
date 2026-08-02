@@ -163,6 +163,14 @@ a { text-decoration: none; color: inherit; }
   width: 100%;
   max-width: 1150px;
   min-height: 555px;
+  /* .fade-in-up's transform (even at rest, translateY(0)) makes this its own
+     stacking context; without an explicit z-index it lands in the "auto"
+     bucket, which loses on DOM order to the growth section's own transform
+     context further down the page — trapping the cta-bar-slot's suggestions
+     dropdown behind that section's heading text no matter how high the
+     dropdown's own z-index is set. An explicit z-index promotes the whole
+     panel into the "positive z-index" bucket, which always wins. */
+  z-index: 1;
 }
 /* Figma: the phone (7:749) and CTA bar (5:55) are separate top-level layers that
    overlap this panel, not children of it — only the bg+tint+subtitle are clipped
@@ -214,7 +222,13 @@ a { text-decoration: none; color: inherit; }
   left: 5.83%;
   top: 78.7%;
   width: 88.7%;
-  z-index: 3;
+  /* the autocomplete suggestions dropdown that opens beneath this bar can
+     extend past the hero panel into the next section; a low z-index here
+     let that next section's own scroll-reveal transform (which creates its
+     own stacking context) paint over the bottom half of the dropdown. Needs
+     to comfortably beat any .fade-on-scroll/.reveal-word content elsewhere
+     on the page, while staying under the sticky header's z-index:100. */
+  z-index: 40;
 }
 
 /* ===== phone / gauge =====
@@ -547,7 +561,9 @@ a { text-decoration: none; color: inherit; }
   left: 21.2%;
   top: 65.5%;
   width: 78.8%;
-  z-index: 3;
+  /* see .cta-bar-slot above — same fix, its dropdown needs to beat this
+     section's own scroll-reveal transform contexts too. */
+  z-index: 40;
 }
 .growth-cta-bar-slot .cta-bar { padding: clamp(14px, 2.5vw, 20px) clamp(12px, 2vw, 17px) clamp(14px, 2.5vw, 20px) clamp(20px, 4vw, 44px); height: auto; min-height: 72px; }
 
