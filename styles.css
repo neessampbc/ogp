@@ -328,6 +328,10 @@ a { text-decoration: none; color: inherit; }
 .health-labels { text-align: center; }
 .health-labels__title { font-family: var(--font-sora); font-weight: 600; font-size: 13px; color: var(--gray-500); margin: 0 0 4px; }
 .health-labels__status { font-family: var(--font-sora); font-weight: 800; font-size: 22px; color: var(--orange); margin: 0; }
+.health-labels__status--poor { color: var(--orange); }
+.health-labels__status--fair { color: var(--amber); }
+.health-labels__status--good { color: var(--green); }
+.health-labels__status--excellent { color: var(--blue-accent); }
 
 .categories-list { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; width: 100%; }
 .status-row-item { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 8px; }
@@ -338,10 +342,13 @@ a { text-decoration: none; color: inherit; }
 .status-labels__status { font-family: var(--font-sora); font-weight: 600; font-size: 12px; margin: 0; }
 .status-labels__status--poor { color: var(--orange); }
 .status-labels__status--fair { color: var(--amber); }
+.status-labels__status--good { color: var(--green); }
+.status-labels__status--excellent { color: var(--blue-accent); }
 .row-score { font-family: var(--font-sora); font-weight: 600; font-size: 14px; color: var(--gray-500); margin: 0; flex-shrink: 0; }
 
 /* ===== CTA bar (shared) ===== */
 .cta-bar {
+  position: relative;
   background: #fff;
   border: 2px solid var(--orange);
   border-radius: 32px;
@@ -357,7 +364,47 @@ a { text-decoration: none; color: inherit; }
 .cta-bar__input { display: flex; align-items: center; gap: 12px; flex: 1 1 auto; min-width: 0; }
 .cta-bar__input img { width: 26px; height: 32px; flex-shrink: 0; }
 .cta-bar__input span { font-family: var(--font-inter); font-size: clamp(14px, 2vw + 8px, 24px); color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cta-bar__field {
+  font-family: var(--font-inter);
+  font-size: clamp(14px, 2vw + 8px, 24px);
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0;
+}
+.cta-bar__field::placeholder { color: #000; opacity: 0.55; }
+.cta-bar__field--needs-selection { outline: 2px solid #c0392b; outline-offset: 3px; border-radius: 6px; }
 .cta-bar__btn { height: clamp(44px, 6vw, 52px); font-size: clamp(14px, 1.3vw + 9px, 22px); padding: 0 clamp(16px, 2.5vw, 24px); flex-shrink: 0; white-space: nowrap; }
+
+/* ===== CTA bar autocomplete suggestions ===== */
+.cta-bar__suggestions {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: #fff;
+  border: 1px solid var(--border-mid);
+  border-radius: 20px;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.14);
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+.cta-bar__suggestions[hidden] { display: none; }
+.cta-bar__suggestion { padding: 10px 14px; border-radius: 12px; cursor: pointer; transition: background 0.15s; }
+.cta-bar__suggestion:hover, .cta-bar__suggestion.is-active { background: var(--bg-soft); }
+.cta-bar__suggestion-main { font-family: var(--font-inter); font-weight: 600; font-size: 15px; color: var(--charcoal); }
+.cta-bar__suggestion-sub { font-family: var(--font-inter); font-size: 13px; color: var(--gray-500); margin-top: 1px; }
 
 /* =========================== PARTNER LOGO MARQUEE =========================== */
 /* Same technique owner.com uses for its dual-direction reviews marquee: each
@@ -1138,6 +1185,159 @@ a { text-decoration: none; color: inherit; }
 .growth-section.fade-on-scroll,
 .services-section.fade-on-scroll { }
 
+/* =========================== FREE AUDIT MODAL =========================== */
+body.audit-modal-open { overflow: hidden; }
+
+.audit-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.audit-modal[hidden] { display: none; }
+.audit-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20,16,12,0.55);
+  backdrop-filter: blur(2px);
+}
+.audit-modal__panel {
+  position: relative;
+  background: #fff;
+  border-radius: 28px;
+  width: min(480px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: clamp(28px, 5vw, 40px) clamp(20px, 5vw, 40px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+.audit-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--gray-500);
+  background: var(--bg-soft);
+  transition: color 0.2s, background 0.2s;
+}
+.audit-modal__close:hover { color: var(--charcoal); background: var(--border-mid); }
+
+.audit-stage[hidden] { display: none; }
+.audit-stage { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+
+/* --- scanning --- */
+.audit-stage__eyebrow { font-family: var(--font-sora); font-weight: 700; font-size: 18px; color: var(--charcoal); margin: 0; padding-right: 32px; }
+.audit-scan-timer { font-family: var(--font-sora); font-weight: 800; font-size: 44px; color: var(--orange); }
+.audit-scan-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; width: 100%; text-align: left; transition: opacity 0.2s; }
+.audit-scan-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-inter);
+  font-size: 15px;
+  color: var(--gray-500);
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--bg-soft);
+  transition: color 0.3s, background 0.3s;
+}
+.audit-scan-step::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid var(--border-mid);
+  transition: border-color 0.3s, background 0.3s;
+}
+.audit-scan-step.is-active { color: var(--charcoal); background: #fff5ec; }
+.audit-scan-step.is-active::before { border-color: var(--orange); border-top-color: transparent; animation: auditSpin 0.8s linear infinite; }
+.audit-scan-step.is-done { color: var(--charcoal); }
+.audit-scan-step.is-done::before { border-color: var(--green); background: var(--green); }
+@keyframes auditSpin { to { transform: rotate(360deg); } }
+
+.audit-scan-error { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.audit-scan-error[hidden] { display: none; }
+.audit-scan-error p { font-family: var(--font-inter); font-size: 14px; color: var(--gray-600); margin: 0; }
+.audit-stage--scanning.is-error .audit-scan-timer,
+.audit-stage--scanning.is-error .audit-scan-steps { opacity: 0.3; }
+
+/* --- results --- */
+.audit-results__gauge { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.audit-results__loss {
+  font-family: var(--font-sora);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--orange);
+  background: #fff1e6;
+  padding: 10px 18px;
+  border-radius: 14px;
+  margin: 0;
+}
+.audit-results__categories { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.audit-category-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-radius: 14px; background: var(--bg-soft); width: 100%; }
+.audit-category-row__name { font-family: var(--font-sora); font-weight: 600; font-size: 14px; color: var(--charcoal); }
+.audit-category-row__grade { font-family: var(--font-sora); font-weight: 700; font-size: 13px; flex-shrink: 0; }
+.audit-category-row__grade--poor { color: var(--orange); }
+.audit-category-row__grade--fair { color: var(--amber); }
+.audit-category-row__grade--good { color: var(--green); }
+.audit-category-row__grade--excellent { color: var(--blue-accent); }
+
+.audit-results__findings-preview { width: 100%; position: relative; text-align: left; }
+.audit-results__findings-title { font-family: var(--font-sora); font-weight: 700; font-size: 15px; color: var(--charcoal); margin: 0 0 10px; }
+.audit-findings-blur { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.audit-findings-blur li {
+  font-family: var(--font-inter);
+  font-size: 14px;
+  color: var(--charcoal);
+  background: #fff;
+  border: 1px solid var(--border-mid);
+  border-radius: 12px;
+  padding: 10px 12px;
+  filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+}
+.audit-findings-fade {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 56px;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 90%);
+  pointer-events: none;
+}
+.audit-results__cta { width: 100%; margin-top: 8px; }
+
+/* --- gate + confirm --- */
+.audit-stage__title { font-family: var(--font-sora); font-weight: 800; font-size: 22px; color: var(--charcoal); margin: 0; padding-right: 32px; }
+.audit-stage__subtitle { font-family: var(--font-inter); font-size: 15px; color: var(--gray-500); margin: 0; }
+.audit-form { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.audit-input {
+  width: 100%;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  padding: 14px 16px;
+  border: 2px solid var(--border-mid);
+  border-radius: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.audit-input:focus { border-color: var(--orange); }
+.audit-input--error { border-color: #c0392b; }
+.audit-stage__submit { width: 100%; }
+.audit-stage__whatsapp { width: 100%; text-align: center; background: var(--green); }
+.audit-stage__whatsapp:hover { box-shadow: 0 10px 20px rgba(16,185,129,0.3); }
+
 /* =========================== RESPONSIVE =========================== */
 /* Font sizes, paddings and gaps are handled by fluid clamp()/vw values inline
    with each rule above, so they scale smoothly between breakpoints instead of
@@ -1287,6 +1487,15 @@ a { text-decoration: none; color: inherit; }
      (.google-card scales itself via clamp()s, no override needed here.) */
   .sales-card { transform: translateX(-50%) scale(0.58); }
   .orders-card { transform: translateX(-50%) scale(0.58); }
+
+  /* free audit modal: panel edge-to-edge with just enough margin to see the
+     backdrop, gauge shrinks so it + the category rows + findings preview all
+     fit above the fold on a short phone viewport without scrolling to find
+     the CTA. */
+  .audit-modal { padding: 10px; }
+  .audit-modal__panel { border-radius: 22px; padding: 24px 16px; }
+  .audit-results__gauge .gauge-container { width: 120px; }
+  .cta-bar__suggestions { max-height: 220px; }
 }
 
 /* =========================== REDUCED MOTION =========================== */
