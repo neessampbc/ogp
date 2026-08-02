@@ -438,7 +438,7 @@
     tabs[index].scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', inline: 'nearest', block: 'nearest' });
 
     if (index === 0) animateGoogleCardPins();
-    if (index === 2) animateReviewsCount();
+    if (index === 1) animateReviewsCount();
 
     setTimeout(function () {
       panels.forEach(function (p, i) { if (i !== index) p.classList.remove('is-leaving'); });
