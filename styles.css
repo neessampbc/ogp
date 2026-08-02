@@ -1385,12 +1385,18 @@ body.audit-modal-open { overflow: hidden; }
     position: static;
     left: auto; top: auto;
     margin: 24px auto 0;
+    /* the desktop z-index only mattered for the absolute-overlay composition;
+       left active, a scroll-reveal transform still honors it as if positioned
+       (CSS Transforms spec), so it can outrank unrelated sections lower on
+       the page in the root stacking order once this element goes static. */
+    z-index: auto;
   }
   .cta-bar-slot {
     position: static;
     left: auto; top: auto;
     width: 100%;
     margin-top: 24px;
+    z-index: auto;
   }
 
   .growth-cta-container { transform: scale(0.7); }
@@ -1411,7 +1417,7 @@ body.audit-modal-open { overflow: hidden; }
     align-items: center;
     gap: 20px;
   }
-  .growth-phone { position: static; left: auto; top: auto; width: 220px; }
+  .growth-phone { position: static; left: auto; top: auto; width: 220px; z-index: auto; }
   .trust-badge {
     position: static;
     left: auto; top: auto;
@@ -1421,9 +1427,15 @@ body.audit-modal-open { overflow: hidden; }
     display: flex;
     align-items: center;
     gap: 12px;
+    /* same leftover-z-index-via-transform issue as .growth-phone above */
+    z-index: auto;
   }
   .trust-badge__icon { position: static; width: 64px; height: 64px; font-size: 32px; flex-shrink: 0; }
   .trust-badge__text { padding-right: 0; }
+  /* NOT reset to z-index:auto like its siblings above — this one has its own
+     autocomplete dropdown that must keep outranking the .partners section
+     below it even once static, so it needs to keep the effective z-index
+     its own base rule + fade-on-scroll transform give it. */
   .growth-cta-bar-slot { position: static; left: auto; top: auto; width: 100%; }
   .growth-cta-bar-slot .cta-bar { flex-direction: column; height: auto; align-items: stretch; padding: 14px; gap: 10px; }
   .growth-cta-bar-slot .cta-bar__btn { width: 100%; }
